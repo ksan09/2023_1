@@ -17,16 +17,13 @@ public class PlayerBrain : MonoBehaviour
     private PlayerSkill _playerSkill;   // 스킬
     private Movement _movement;         // 이동
 
-    private Camera _mainCam;
-
     private State _state = State.None;
 
     private void Awake()
     {
         _playerInput    = GetComponent<PlayerInput>();
+        _playerSkill    = GetComponent<PlayerSkill>();
         _movement       = GetComponent<Movement>();
-
-        _mainCam        = Camera.main;
 
     }
 
@@ -55,8 +52,6 @@ public class PlayerBrain : MonoBehaviour
     }
     private void MovePlayer()
     {
-        if (_state == State.SkillMove) return;
-
         _movement.MoveDir = Vector3.zero;
 
         if (_playerInput.Forward)
@@ -73,8 +68,7 @@ public class PlayerBrain : MonoBehaviour
     private void RotatePlayer()
     {
         Vector3 rotate = Vector3.zero;
-        rotate.y = _mainCam.transform.eulerAngles.y;
-        
+        rotate.y = Define.MainCam.transform.eulerAngles.y;
 
         _movement.Rotate(rotate);
     }
@@ -84,11 +78,6 @@ public class PlayerBrain : MonoBehaviour
             _playerSkill.ShotWeb();
         else if(_playerInput.PoolWeb)
             _playerSkill.PoolWeb();
-
-        if (_movement._useMove && _playerSkill.IsUseSkill) // 무브먼트 사용여부
-            _movement.UseMovement(false);
-        else if (_movement._useMove == false && _playerSkill.IsUseSkill == false)
-            _movement.UseMovement(true);
     }
     private void PlayerState()
     {

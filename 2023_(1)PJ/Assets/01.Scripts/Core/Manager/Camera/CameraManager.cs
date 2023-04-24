@@ -8,6 +8,5 @@ public class CameraManager : MonoBehaviour
 
     public CameraManager()
     {
-
     }
 }
