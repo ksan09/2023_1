@@ -12,6 +12,8 @@ public class PlayerSkill : MonoBehaviour
 
     private RaycastHit  hit;
     private Vector3     _hitPos;            // 레이캐스트 맞은 위치
+    [SerializeField]
+    private Transform   _webPos;            // 거미줄 발사 위치
     public bool IsUseSkill { get; private set; }
 
     private SpringJoint _joint;
@@ -33,7 +35,7 @@ public class PlayerSkill : MonoBehaviour
     {
         if (IsUseSkill == false) return;
 
-        _webLine.SetPosition(0, transform.position);
+        _webLine.SetPosition(0, _webPos.position);
         _webLine.SetPosition(1, _hitPos);
     }
 

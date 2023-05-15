@@ -35,12 +35,14 @@ public class PlayerBrain : MonoBehaviour
     private void Update()
     {
         MovePlayer();
+        JumpPlayer();
         RotatePlayer();
         PlayerSkill();
 
         PlayerState();
         DebugPlayer();
     }
+
 
     private void InitPlayer()
     {
@@ -64,6 +66,13 @@ public class PlayerBrain : MonoBehaviour
             _movement.MoveDir += transform.right;
 
         _movement.Move();
+    }
+    private void JumpPlayer()
+    {
+        //
+        if (_playerInput.Jump && GroundCheck())
+            _movement.Jump();
+
     }
     private void RotatePlayer()
     {
@@ -97,5 +106,10 @@ public class PlayerBrain : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }    
+    }
+    private bool GroundCheck()
+    {
+        // Àû¾îµÖ¾ß ÇÔ
+        return true;
     }
 }

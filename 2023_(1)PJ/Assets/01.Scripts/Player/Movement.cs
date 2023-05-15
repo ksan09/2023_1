@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
 
     [SerializeField]
     private float _speed;
+    [SerializeField]
+    private float _jumpPower = 10.0f;
     private Vector3 _moveDir;
     public Vector3 MoveDir { get { return _moveDir; } set { _moveDir = value; } }
 
@@ -45,6 +47,13 @@ public class Movement : MonoBehaviour
 
         Debug.Log(_useMove);
         
+    }
+
+    public void Jump()
+    {
+        if (_useMove == false) return;
+
+        _rigidbody.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
     }
     public void Move()
     {
