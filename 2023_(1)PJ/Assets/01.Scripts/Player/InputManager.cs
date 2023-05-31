@@ -74,4 +74,8 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Player.WeaponChange.triggered;
     }
+    public bool InteractKeyDown()
+    {
+        return playerControls.Player.Interact.triggered;
+    }
 }
