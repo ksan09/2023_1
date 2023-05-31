@@ -1,6 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum PlayerWeaponState
+{
+    None = 0,
+    RopeMode,
+    PushPoolMode,
+}
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerBrain : MonoBehaviour
@@ -8,18 +16,24 @@ public class PlayerBrain : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+
     [SerializeField]
     private float playerSpeed = 2.0f;
     [SerializeField]
     private float jumpHeight = 1.0f;
     [SerializeField]
     private float gravityValue = -9.81f;
+
     private InputManager inputManager;
+    private PlayerSkill playerSkill;
     private Transform cameraTransform;
+
+    private PlayerWeaponState playerWeaponState = PlayerWeaponState.RopeMode;
 
     private void Awake()
     {
         controller = gameObject.GetComponent<CharacterController>();
+        playerSkill = gameObject.GetComponent<PlayerSkill>();
         cameraTransform = Camera.main.transform;
     }
 
@@ -29,6 +43,58 @@ public class PlayerBrain : MonoBehaviour
     }
 
     void Update()
+    {
+        PlayerMove();
+        Skill();
+    }
+
+    private void Skill()
+    {
+        SkillChange();
+
+        if(playerWeaponState == PlayerWeaponState.RopeMode)
+        {
+            RopemodeSkill();
+        }
+        else if(playerWeaponState == PlayerWeaponState.PushPoolMode)
+        {
+            PushPoolmodeSkill();
+        }
+    }
+
+    private void PushPoolmodeSkill()
+    {
+        if (inputManager.PlayerPushShot())
+        {
+            Debug.Log(1);
+            playerSkill.PushShot();
+        }
+        else if (inputManager.PlayerPullShot())
+        {
+            Debug.Log(2);
+            playerSkill.PullShot();
+        }
+    }
+
+    private void RopemodeSkill()
+    {
+        if (inputManager.PlayerShotRope())
+        {
+            playerSkill.ShotRope();
+        }
+        else if (inputManager.PlayerDeleteRope())
+        {
+            playerSkill.DeleteRope();
+        }
+    }
+
+    private void SkillChange()
+    {
+        if (inputManager.WeaponChange())
+            playerWeaponState = ((playerWeaponState == PlayerWeaponState.RopeMode) ? PlayerWeaponState.PushPoolMode : PlayerWeaponState.RopeMode);
+    }
+
+    private void PlayerMove()
     {
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)

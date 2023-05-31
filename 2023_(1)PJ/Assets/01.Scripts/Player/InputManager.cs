@@ -52,5 +52,26 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Player.Jump.triggered;
     }
+    public bool PlayerShotRope()
+    {
+        return playerControls.Player.LeftMouse.triggered;
+    }
+    public bool PlayerDeleteRope()
+    {
+        return playerControls.Player.RightMouse.triggered;
+    }
+    public bool PlayerPushShot()
+    {
+        return playerControls.Player.LeftMouse.IsPressed();
+    }
+    public bool PlayerPullShot()
+    {
+        return playerControls.Player.RightMouse.IsPressed();
+    }
 
+
+    public bool WeaponChange()
+    {
+        return playerControls.Player.WeaponChange.triggered;
+    }
 }

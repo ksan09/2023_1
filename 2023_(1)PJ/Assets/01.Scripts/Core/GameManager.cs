@@ -61,6 +61,9 @@ public class GameManager : MonoBehaviour
         {
             PoolManager.Instance.CreatePool(p, 20);
         }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     #region GamaManager

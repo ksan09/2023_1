@@ -4,9 +4,9 @@ using Cinemachine;
 public class CinemachinePOVExtension : CinemachineExtension
 {
     [SerializeField]
-    private float horizontalSpeed = 10f;
-    [SerializeField]
     private float verticalSpeed = 10f;
+    [SerializeField]
+    private float horizontalSpeed = 10f;
     [SerializeField]
     private float clampAngle = 80f;
 
@@ -31,10 +31,10 @@ public class CinemachinePOVExtension : CinemachineExtension
                 Vector2 deltaInput = Vector2.zero;
                 if (inputManager != null)
                     deltaInput = inputManager.GetMouseDelta();
-                startingRotation.x += deltaInput.x * Time.deltaTime * verticalSpeed;
-                startingRotation.y += deltaInput.y * Time.deltaTime * horizontalSpeed;
+                startingRotation.x += deltaInput.x * Time.deltaTime * horizontalSpeed;
+                startingRotation.y += deltaInput.y * Time.deltaTime * verticalSpeed;
                 startingRotation.y = Mathf.Clamp(startingRotation.y, -clampAngle, clampAngle);
-                state.RawOrientation = Quaternion.Euler(startingRotation.y, startingRotation.x, 0f);
+                state.RawOrientation = Quaternion.Euler(-startingRotation.y, startingRotation.x, 0f);
             }
         }
     }
