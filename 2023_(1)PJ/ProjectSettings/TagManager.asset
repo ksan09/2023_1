@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Trap
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - ableShot
   - Ground
   - 
-  - 
+  - Player
   - 
   - 
   - 
@@ -40,6 +41,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Tilemap
+    uniqueID: 4015765161
     locked: 0
   - name: Effect
     uniqueID: 1608403237

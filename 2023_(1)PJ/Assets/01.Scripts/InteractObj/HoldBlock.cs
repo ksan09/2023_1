@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class HoldBlock : MonoBehaviour, IInteractable
 {
-    private bool isHold = false;
+    private bool hold = false;
     private PlayerBrain _player;
+    private Rigidbody _rigidbody;
 
     private void Awake()
     {
         _player = FindObjectOfType<PlayerBrain>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -17,13 +19,23 @@ public class HoldBlock : MonoBehaviour, IInteractable
         
     }
 
-    private void Holding()
+    private void Holding(bool use)
     {
-        if (isHold == false) return;
+        hold = use;
+        _rigidbody.useGravity = !use;
     }
 
     public void Interact()
     {
-        isHold = !isHold;
+        if(_player.IsHold == false && hold == false)
+        {
+            _player.DoHold(transform);
+            Holding(true);
+        }
+        else
+        {
+            _player.UnHold();
+            Holding(false);
+        }
     }
 }

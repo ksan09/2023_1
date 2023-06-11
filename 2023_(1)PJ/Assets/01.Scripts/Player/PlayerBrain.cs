@@ -16,6 +16,8 @@ public class PlayerBrain : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    private bool isHold = false;
+    public bool IsHold => isHold;
 
     [SerializeField]
     private float playerSpeed = 2.0f;
@@ -27,6 +29,9 @@ public class PlayerBrain : MonoBehaviour
     private InputManager inputManager;
     private PlayerSkill playerSkill;
     private Transform cameraTransform;
+
+    private Transform holdObject = null;
+    public Transform HoldObject { get; set; }
 
     private PlayerWeaponState playerWeaponState = PlayerWeaponState.RopeMode;
 
@@ -46,6 +51,30 @@ public class PlayerBrain : MonoBehaviour
     {
         PlayerMove();
         Skill();
+        Hold();
+    }
+
+    private void Hold()
+    {
+        if(isHold)
+        {
+            Vector3 pos = transform.position;
+            pos.y += 0.3f;
+            Vector3 viewDir = Define.MainCam.transform.forward;
+            viewDir.y = 0f;
+            pos += viewDir.normalized * 1f;
+            holdObject.position = pos;
+        }
+    }
+    public void DoHold(Transform obj)
+    {
+        isHold = true;
+        holdObject = obj;
+    }
+    public void UnHold()
+    {
+        isHold = false;
+        holdObject = null;
     }
 
     private void Skill()
@@ -66,12 +95,10 @@ public class PlayerBrain : MonoBehaviour
     {
         if (inputManager.PlayerPushShot())
         {
-            Debug.Log(1);
             playerSkill.PushShot();
         }
         else if (inputManager.PlayerPullShot())
         {
-            Debug.Log(2);
             playerSkill.PullShot();
         }
     }

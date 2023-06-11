@@ -59,6 +59,10 @@ public class PlayerSkill : MonoBehaviour
         // 맞으면 Pos를 저장
         if(isHit)
         {
+            if(_hitCount == 1)
+                if (_hitTrm[0] == hit.transform)
+                    return;
+
             _hitPos[_hitCount] = hit.point;
 
             _hitTrm[_hitCount] = hit.collider.gameObject.transform;

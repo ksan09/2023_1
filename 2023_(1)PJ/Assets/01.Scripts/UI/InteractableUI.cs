@@ -8,6 +8,7 @@ public class InteractableUI : MonoBehaviour
 {
     RaycastHit hit;
     TextMeshProUGUI _textUI;
+    private readonly float _dist = 4f;
 
     private readonly string interactText = "[E]";
 
@@ -23,8 +24,10 @@ public class InteractableUI : MonoBehaviour
 
     private void ShowInteractableUI()
     {
+        LayerMask layer = (-1) - (1 << LayerMask.NameToLayer("Player"));
+
         bool isHit = (Physics.Raycast(Define.MainCam.transform.position,
-            Define.MainCam.transform.forward, out hit));
+            Define.MainCam.transform.forward, out hit, _dist, layer));
 
         Debug.Log("1");
 
