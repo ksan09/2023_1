@@ -14,15 +14,11 @@ public class HoldBlock : MonoBehaviour, IInteractable
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Update()
-    {
-        
-    }
-
     private void Holding(bool use)
     {
         hold = use;
         _rigidbody.useGravity = !use;
+        _rigidbody.constraints = use ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.FreezeRotation;
     }
 
     public void Interact()

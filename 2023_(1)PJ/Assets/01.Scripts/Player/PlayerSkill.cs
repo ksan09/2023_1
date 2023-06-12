@@ -19,8 +19,12 @@ public class PlayerSkill : MonoBehaviour
     private int             _hitCount = 0;
 
     public bool             IsUseSkill { get; private set; }
+    private bool            _isPlayGunAnimation = false;
     private SpringJoint     _joint;
     private LineRenderer    _lineRenderer;
+
+    [SerializeField]
+    private Animator _gunAnimator;
 
     private void Awake()
     {
@@ -30,6 +34,9 @@ public class PlayerSkill : MonoBehaviour
 
     private void Update()
     {
+        //if (_joint != null && _joint.massScale != 100f)
+        //    _joint.massScale = 100f;
+
         RenderRope();
     }
 
@@ -49,12 +56,19 @@ public class PlayerSkill : MonoBehaviour
 
     public void ShotRope()
     {
-        if (IsUseSkill == true)
+        if (IsUseSkill == true || _isPlayGunAnimation)
             return;
 
         // 레이저를 쏴
         bool isHit = (Physics.Raycast(Define.MainCam.transform.position,
             Define.MainCam.transform.forward, out hit, _webDist, _shotAbleLayer));
+
+        _isPlayGunAnimation = true;
+        _gunAnimator.SetTrigger("Shot");
+        GameManager.Instance.DelayInvoke(() => { 
+            _isPlayGunAnimation = false;
+            _gunAnimator.ResetTrigger("Shot");
+        }, 0.5f);
 
         // 맞으면 Pos를 저장
         if(isHit)
@@ -80,8 +94,9 @@ public class PlayerSkill : MonoBehaviour
 
                 // 조인트 설정
                 _joint.autoConfigureConnectedAnchor = false;
-                _joint.connectedMassScale = 100f;
-                _joint.massScale = 100f;
+
+                _joint.connectedMassScale = 500f;
+                _joint.massScale = 500f;
 
                 // 오프셋 조정
                 _joint.anchor = _hitOffset[0];
@@ -95,6 +110,8 @@ public class PlayerSkill : MonoBehaviour
                 _joint.spring = 1f;
                 _joint.damper = 2f;
                 _joint.massScale = 5f;
+
+                _joint.massScale = 500f;
             }
         }
     }

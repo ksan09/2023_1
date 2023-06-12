@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,7 +69,16 @@ public class GameManager : MonoBehaviour
 
     #region GamaManager
     
+    public void DelayInvoke(Action action, float delay)
+    {
+        StartCoroutine(DelayCo(action, delay));
+    }
 
+    IEnumerator DelayCo(Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
+    }
     #endregion
     #region PoolManager_Method
 
