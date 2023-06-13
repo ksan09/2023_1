@@ -23,7 +23,7 @@ public class PressButton : MonoBehaviour
     private void PressCheck()
     {
         LayerMask layer = (-1) - (1 << LayerMask.NameToLayer("Default"));
-        bool isPressed = Physics.CheckBox(_boxCollider.transform.position + _boxCollider.center, _boxCollider.size, Quaternion.identity, layer);
+        bool isPressed = Physics.CheckBox(_boxCollider.transform.position + _boxCollider.center, _boxCollider.size / 2, Quaternion.identity, layer);
         _isPressed = isPressed;
         if (isPressed)
             Debug.Log("´­¸²");
