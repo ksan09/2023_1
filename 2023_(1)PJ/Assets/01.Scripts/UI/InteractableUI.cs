@@ -29,14 +29,11 @@ public class InteractableUI : MonoBehaviour
         bool isHit = (Physics.Raycast(Define.MainCam.transform.position,
             Define.MainCam.transform.forward, out hit, _dist, layer));
 
-        Debug.Log("1");
-
         if (isHit == false)
         {
             _textUI.text = "";
             return;
         }
-        Debug.Log("2");
 
         IInteractable interactableObj = hit.transform.gameObject.GetComponent<IInteractable>();
         if (interactableObj == null)
@@ -44,7 +41,6 @@ public class InteractableUI : MonoBehaviour
             _textUI.text = "";
             return;
         }
-        Debug.Log("3");
 
         // UI Ç¥½Ã
         _textUI.text = interactText;

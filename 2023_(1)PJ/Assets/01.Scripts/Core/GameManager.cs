@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     [Header("UIManager 값")]
 
     [SerializeField]
-    private Canvas _canvas;
+    private Transform _canvas;
 
     #endregion
     #region SoundManager's var
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
         // 매니저 생성
         PoolManager.Instance    = new PoolManager(transform);
-        UIManager.Instance      = new UIManager();
+        UIManager.Instance      = new UIManager(_canvas);
         SoundManager.Instance   = new SoundManager();
         StageManager.Instance   = new StageManager();
         CameraManager.Instance  = new CameraManager();
