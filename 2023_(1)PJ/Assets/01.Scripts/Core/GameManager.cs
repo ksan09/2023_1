@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     #region Game's var
+    public Transform PlayerTransform;
     #endregion
 
     #region Managers
@@ -28,14 +29,6 @@ public class GameManager : MonoBehaviour
     #region SoundManager's var
 
     #endregion
-    #region StageManager's var
-    [Header("StageManager 값")]
-
-    [SerializeField]
-    private int _maxChapter;
-    [SerializeField]
-    private int _maxStage;
-    #endregion
     #region CameraManager's var
     #endregion
     #region TimeManager's var
@@ -49,11 +42,12 @@ public class GameManager : MonoBehaviour
         else
             Debug.LogError("GameManager is not one");
 
+        PlayerTransform = GameObject.Find("Player").transform;
+
         // 매니저 생성
         PoolManager.Instance    = new PoolManager(transform);
         UIManager.Instance      = new UIManager(_canvas);
         SoundManager.Instance   = new SoundManager();
-        StageManager.Instance   = new StageManager();
         CameraManager.Instance  = new CameraManager();
         TimeManager.Instance    = new TimeManager();
 
@@ -87,9 +81,6 @@ public class GameManager : MonoBehaviour
 
     #endregion
     #region SoundManager_Method
-
-    #endregion
-    #region StageManager_Method
 
     #endregion
     #region CameraManager_Method

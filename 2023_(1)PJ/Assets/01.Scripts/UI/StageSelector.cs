@@ -41,8 +41,17 @@ public class StageSelector : MonoBehaviour
         {
             RightMoveUI();
         }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            LoadStage();
+        }
     }
 
+    private void LoadStage()
+    {
+        StageManager.Instance.LoadStage(currentNum);
+    }
 
     private void LeftMoveUI()
     {

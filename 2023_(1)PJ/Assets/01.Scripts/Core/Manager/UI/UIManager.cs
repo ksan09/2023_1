@@ -12,12 +12,20 @@ public class UIManager
     private readonly float _textShowTime = 0.1f;
     private bool _showed = false;
 
+    private RectTransform _clearPanel;
+
     public UIManager(Transform _canvas)
     {
         _ingamePanel = _canvas.Find("IngamePanel").transform;
         _errorText = _ingamePanel.Find("ErrorText").GetComponent<TextMeshProUGUI>();
+
+        _clearPanel = _canvas.Find("ClearPanel").GetComponent<RectTransform>();
     }
 
+    public void ShowClearPanel()
+    {
+        _clearPanel.gameObject.SetActive(true);
+    }
     public void ErrorMessage(string text)
     {
         if (_showed == true) return;

@@ -6,4 +6,5 @@ public class Map : MonoBehaviour
 {
     [SerializeField] private Transform _startPos;
     public Vector3 StartPos => _startPos.position;
+
 }

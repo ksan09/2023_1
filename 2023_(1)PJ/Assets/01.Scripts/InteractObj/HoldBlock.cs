@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,12 +34,27 @@ public class HoldBlock : MonoBehaviour, IInteractable
         }
         else if (_player.IsHold == true && hold == true)
         {
+            if (UnHoldCheck() == false)
+            {
+                UIManager.Instance.ErrorMessage("개체를 놓을 공간이 없습니다.");
+                return;
+            }
+
             _player.UnHold();
             Holding(false);
         }
         else if (_player.IsHold == true && hold == false)
         {
-            UIManager.Instance.ErrorMessage("이미 들고 있는 개체 존재");
+            UIManager.Instance.ErrorMessage("이미 가지고 있는 개체 존재");
         }
+    }
+
+    private bool UnHoldCheck()
+    {
+        LayerMask layer = (-1) - (1 << LayerMask.NameToLayer("Player"));
+        _collider.enabled = false;
+        bool check = Physics.CheckBox(_collider.transform.position + _collider.center, _collider.size / 2, Quaternion.identity, layer);
+        _collider.enabled = true;
+        return check == false;
     }
 }
