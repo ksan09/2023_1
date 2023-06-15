@@ -10,7 +10,7 @@ public class EndPoint : MonoBehaviour, IInteractable
     {
         if(clear == false)
         {
-            UIManager.Instance.ShowClearPanel();
+            GameManager.Instance.GameClear();
             clear = true;
         }
     }

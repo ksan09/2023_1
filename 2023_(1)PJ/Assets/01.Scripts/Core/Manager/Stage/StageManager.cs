@@ -10,6 +10,7 @@ public class StageManager : MonoBehaviour
     private int currentStage = 0;
     public int CurrentStageNum => currentStage;
     private Map _stageMap = null;
+    public Map Stage => _stageMap;
 
     private void Awake()
     {
@@ -23,16 +24,30 @@ public class StageManager : MonoBehaviour
             // 이미 인스턴스가 존재한다면 지운다.
             Destroy(gameObject);
         }
-            
     }
 
+    public void LoadNextStage()
+    {
+        LoadStage(currentStage + 1);
+    }
     public void LoadStage(int stage)
     {
         StartCoroutine(LoadCo(stage));
     }
+    public void ReloadStage()
+    {
+        GameManager.Instance.PlayerBrain.ResetPlayer();
+        if (_stageMap != null)
+            Destroy(_stageMap.gameObject);
+
+        MapGenerate(currentStage);
+    }
 
     IEnumerator LoadCo(int stage)
     {
+        if(_stageMap != null)
+            Destroy(_stageMap.gameObject);
+
         currentStage = stage;
 
         AsyncOperation oper = SceneManager.LoadSceneAsync(stageSceneNum);
@@ -41,11 +56,16 @@ public class StageManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        Map map = Resources.Load<Map>($"Stage{stage}");
-        if(map == null)
+        MapGenerate(stage);
+    }
+
+    private void MapGenerate(int num)
+    {
+        Map map = Resources.Load<Map>($"Stage{num}");
+        if (map == null)
         {
             Debug.LogError("Stage Prefab is null");
-            yield break;
+            return;
         }
 
         _stageMap = Instantiate(map, transform.position, Quaternion.identity, transform);
@@ -54,6 +74,7 @@ public class StageManager : MonoBehaviour
         if (_stageMap != null)
             Debug.Log("생성됨");
 
-        GameManager.Instance.PlayerTransform.position = map.StartPos;
+        GameManager.Instance.TeleportPlayer(map.StartPos);
+        UIManager.Instance.PopupMessage($"Stage {num}");
     }
 }

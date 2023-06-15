@@ -1902,6 +1902,7 @@ GameObject:
   - component: {fileID: 800464528923127189}
   - component: {fileID: 808084644845951879}
   - component: {fileID: 831629708560380705}
+  - component: {fileID: 7986478049119926298}
   m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
@@ -1987,6 +1988,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.7000001, z: 1}
   m_Center: {x: 0, y: -0.65, z: -0.00000008940697}
+--- !u!114 &7986478049119926298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821356973698016577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e44fd5918a779409df789ac128efa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &821377960072025962
 GameObject:
   m_ObjectHideFlags: 0
@@ -11843,7 +11856,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897152198422002578}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11920,7 +11933,8 @@ MonoBehaviour:
   m_text: "\uCD1D\uC740 \uD30C\uB780\uC0C9 \uBE14\uB7ED\uACFC \uBC15\uC2A4\uC5D0
     \n\uCD1D\uC744 \uC3F4\uC11C \uC5F0\uACB0\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.\n\n\uC88C\uD074\uB9AD\uC73C\uB85C
     \uC5F0\uACB0\uD560 \uC218 \uC788\uC73C\uBA70,\n\uC6B0\uD074\uB9AD\uC73C\uB85C
-    \uC5F0\uACB0\uC744 \uD574\uC81C\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    \uC5F0\uACB0\uC744 \uD574\uC81C\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.\n\nR\uD0A4\uB85C
+    \uB2E4\uC2DC\uC2DC\uC791, ESC \uD0A4\uB85C \uAC8C\uC784 \uBA54\uB274\uB85C \uB3CC\uC544\uAC00\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2fff869001e985a47bb58315be277b72, type: 2}
   m_sharedMaterial: {fileID: -1935740309379461247, guid: 2fff869001e985a47bb58315be277b72,

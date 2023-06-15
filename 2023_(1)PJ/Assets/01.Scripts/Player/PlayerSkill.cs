@@ -68,9 +68,10 @@ public class PlayerSkill : MonoBehaviour
         if (_isPlayGunAnimation)
             return;
 
+        Camera cam = Camera.main;
         // 레이저를 쏴
-        bool isHit = (Physics.Raycast(Define.MainCam.transform.position,
-            Define.MainCam.transform.forward, out hit, _webDist, _shotAbleLayer));
+        bool isHit = (Physics.Raycast(cam.transform.position,
+            cam.transform.forward, out hit, _webDist, _shotAbleLayer));
 
         _isPlayGunAnimation = true;
         _gunAnimator.SetTrigger("Shot");
@@ -133,30 +134,5 @@ public class PlayerSkill : MonoBehaviour
 
         // 라인 렌더러 지우기
         DrawRope(false);
-    }
-
-    public void PushShot()
-    {
-        // 레이저를 쏴
-        bool isHit = (Physics.Raycast(Define.MainCam.transform.position,
-            Define.MainCam.transform.forward, out hit, _webDist, _shotAbleLayer));
-
-        if(isHit)
-        {
-            Rigidbody temp = hit.transform.gameObject.GetComponent<Rigidbody>();
-            temp.AddForce(-hit.normal * _power, ForceMode.Force);
-        }
-    }
-    public void PullShot()
-    {
-        // 레이저를 쏴
-        bool isHit = (Physics.Raycast(Define.MainCam.transform.position,
-            Define.MainCam.transform.forward, out hit, _webDist, _shotAbleLayer));
-
-        if(isHit)
-        {
-            Rigidbody temp = hit.transform.gameObject.GetComponent<Rigidbody>();
-            temp.AddForce(hit.normal * _power, ForceMode.Force);
-        }
     }
 }

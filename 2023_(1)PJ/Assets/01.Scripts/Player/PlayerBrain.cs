@@ -15,6 +15,7 @@ public class PlayerBrain : MonoBehaviour
 {
     private CharacterController controller;
     private Vector3 playerVelocity;
+    public Vector3 PlayerWarpPos { get; set; } = Vector3.zero;
     private bool groundedPlayer;
     private bool isHold = false;
     public bool IsHold => isHold;
@@ -26,6 +27,7 @@ public class PlayerBrain : MonoBehaviour
     [SerializeField]
     private float gravityValue = -9.81f;
 
+    private Camera cam;
     private InputManager inputManager;
     private PlayerSkill playerSkill;
     private Transform cameraTransform;
@@ -39,7 +41,8 @@ public class PlayerBrain : MonoBehaviour
     {
         controller = gameObject.GetComponent<CharacterController>();
         playerSkill = gameObject.GetComponent<PlayerSkill>();
-        cameraTransform = Camera.main.transform;
+        cam = Camera.main;
+        cameraTransform = cam.transform;
     }
 
     private void Start()
@@ -54,13 +57,32 @@ public class PlayerBrain : MonoBehaviour
         Hold();
     }
 
+    private void LateUpdate()
+    {
+        Teleport();
+    }
+    public void ResetPlayer()
+    {
+        UnHold();
+    }
+    private void Teleport()
+    {
+        if(PlayerWarpPos != Vector3.zero)
+        {
+            controller.enabled = false;
+            transform.position = PlayerWarpPos;
+            PlayerWarpPos = Vector3.zero;
+            controller.enabled = true;
+        }    
+    }
+
     private void Hold()
     {
         if(isHold)
         {
             Vector3 pos = transform.position;
             pos.y += 0.3f;
-            Vector3 viewDir = Define.MainCam.transform.forward;
+            Vector3 viewDir = cam.transform.forward;
             viewDir.y = 0f;
             pos += viewDir.normalized * 1f;
             holdObject.position = pos;
@@ -79,30 +101,11 @@ public class PlayerBrain : MonoBehaviour
 
     private void Skill()
     {
-        SkillChange();
-
         if(playerWeaponState == PlayerWeaponState.RopeMode)
         {
             RopemodeSkill();
         }
-        else if(playerWeaponState == PlayerWeaponState.PushPoolMode)
-        {
-            PushPoolmodeSkill();
-        }
     }
-
-    private void PushPoolmodeSkill()
-    {
-        if (inputManager.PlayerPushShot())
-        {
-            playerSkill.PushShot();
-        }
-        else if (inputManager.PlayerPullShot())
-        {
-            playerSkill.PullShot();
-        }
-    }
-
     private void RopemodeSkill()
     {
         if (inputManager.PlayerShotRope())
@@ -113,12 +116,6 @@ public class PlayerBrain : MonoBehaviour
         {
             playerSkill.DeleteRope();
         }
-    }
-
-    private void SkillChange()
-    {
-        if (inputManager.WeaponChange())
-            playerWeaponState = ((playerWeaponState == PlayerWeaponState.RopeMode) ? PlayerWeaponState.PushPoolMode : PlayerWeaponState.RopeMode);
     }
 
     private void PlayerMove()

@@ -26,8 +26,10 @@ public class InteractableUI : MonoBehaviour
     {
         LayerMask layer = (-1) - (1 << LayerMask.NameToLayer("Player"));
 
-        bool isHit = (Physics.Raycast(Define.MainCam.transform.position,
-            Define.MainCam.transform.forward, out hit, _dist, layer));
+        Camera cam = Camera.main;
+
+        bool isHit = (Physics.Raycast(cam.transform.position,
+            cam.transform.forward, out hit, _dist, layer));
 
         if (isHit == false)
         {

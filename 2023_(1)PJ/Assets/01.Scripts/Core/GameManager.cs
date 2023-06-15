@@ -1,14 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     #region Game's var
-    public Transform PlayerTransform;
+    private bool isGameClear = false;
+
+    public Transform PlayerTransform { get; private set; }
+    public PlayerBrain PlayerBrain { get; private set; }
     #endregion
 
     #region Managers
@@ -43,6 +48,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("GameManager is not one");
 
         PlayerTransform = GameObject.Find("Player").transform;
+        PlayerBrain = PlayerTransform.GetComponent<PlayerBrain>();
 
         // 매니저 생성
         PoolManager.Instance    = new PoolManager(transform);
@@ -61,11 +67,41 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
     }
 
+    private void Update()
+    {
+        Restart();
+        ReturnMenu();
+    }
+
+
     #region GamaManager
-    
+
+    public void GameClear()
+    {
+        isGameClear = true;
+        UIManager.Instance.ShowClearPanel();
+    }
+    private void ReturnMenu()
+    {
+        if (isGameClear) return;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            SceneManager.LoadScene(1);
+    }
+    private void Restart()
+    {
+        if (isGameClear) return;
+
+        if(Input.GetKeyDown(KeyCode.R))
+            StageManager.Instance.ReloadStage();
+    }
     public void DelayInvoke(Action action, float delay)
     {
         StartCoroutine(DelayCo(action, delay));
+    }
+    public void TeleportPlayer(Vector3 pos)
+    {
+        PlayerBrain.PlayerWarpPos = pos;
     }
 
     IEnumerator DelayCo(Action action, float delay)
