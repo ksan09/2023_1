@@ -64,6 +64,7 @@ public class PlayerBrain : MonoBehaviour
     public void ResetPlayer()
     {
         UnHold();
+        playerSkill.DeleteRope();
     }
     private void Teleport()
     {

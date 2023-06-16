@@ -400,7 +400,7 @@ MonoBehaviour:
   _left2: {fileID: 1475508059}
   _right1: {fileID: 1273467268}
   _right2: {fileID: 1368033677}
-  maxNumber: 10
+  maxNumber: 5
   minNumber: 1
 --- !u!1 &492461077
 GameObject:
