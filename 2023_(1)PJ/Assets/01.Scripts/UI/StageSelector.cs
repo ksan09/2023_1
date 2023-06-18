@@ -32,6 +32,11 @@ public class StageSelector : MonoBehaviour
         SetShowUI();
     }
 
+    private void Start()
+    {
+        AudioManager.Instance.PlayBGM("BGM02");
+    }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
@@ -50,6 +55,7 @@ public class StageSelector : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
+            AudioManager.Instance.PlaySystemBtnClick();
             LoadStage();
         }
     }

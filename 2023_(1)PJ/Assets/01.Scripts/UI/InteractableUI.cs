@@ -49,6 +49,7 @@ public class InteractableUI : MonoBehaviour
 
         if (InputManager.Instance.InteractKeyDown())
         {
+            AudioManager.Instance.PlaySystemBtnClick();
             interactableObj.Interact();
         }
     }

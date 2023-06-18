@@ -20,6 +20,12 @@ public class IntroUIManager : MonoBehaviour
             Instance = this;
         else
             Debug.LogError("Many IntroUiManager!");
+
+    }
+
+    private void Start()
+    {
+        AudioManager.Instance.PlayBGM("BGM01");
     }
 
     private void Update()

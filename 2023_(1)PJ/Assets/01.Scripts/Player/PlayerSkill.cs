@@ -25,6 +25,9 @@ public class PlayerSkill : MonoBehaviour
     private LineRenderer        _lineRenderer;
 
     [SerializeField]
+    private AudioSource _shotSource;
+
+    [SerializeField]
     private Animator _gunAnimator;
 
     private void Awake()
@@ -84,7 +87,7 @@ public class PlayerSkill : MonoBehaviour
         if(isHit)
         {
             if (_hitCount >= 1 && _hitTrm.Contains(hit.transform)) return;
-                
+            AudioManager.Instance.PlayAudio("Shot", _shotSource);
 
             AddRope();
             if(_hitCount >= 2)
@@ -124,6 +127,8 @@ public class PlayerSkill : MonoBehaviour
     }
     public void DeleteRope()
     {
+        AudioManager.Instance.PlayAudio("RopeDestroy", _shotSource);
+
         _hitCount = 0;
         _hitPos.Clear();
         _hitOffset.Clear();

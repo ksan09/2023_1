@@ -27,6 +27,9 @@ public class PlayerBrain : MonoBehaviour
     [SerializeField]
     private float gravityValue = -9.81f;
 
+    [SerializeField]
+    private AudioSource _jumpSource;
+
     private Camera cam;
     private InputManager inputManager;
     private PlayerSkill playerSkill;
@@ -141,6 +144,7 @@ public class PlayerBrain : MonoBehaviour
         // Changes the height position of the player..
         if (inputManager.PlayerJumpedThisFrame() && groundedPlayer)
         {
+            AudioManager.Instance.PlayAudio("PlayerJump", _jumpSource);
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         }
 
