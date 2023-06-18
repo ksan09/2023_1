@@ -55,6 +55,8 @@ public class PlayerBrain : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance.IsGameStop) return;
+
         PlayerMove();
         Skill();
         Hold();

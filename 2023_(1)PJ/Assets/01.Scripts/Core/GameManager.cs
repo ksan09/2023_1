@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     #region Game's var
-    private bool isGameClear = false;
+    private bool _isGameStop = false;
+    public bool IsGameStop => _isGameStop;
 
     public Transform PlayerTransform { get; private set; }
     public PlayerBrain PlayerBrain { get; private set; }
@@ -65,6 +66,8 @@ public class GameManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        GameStop(false);
     }
 
     private void Update()
@@ -75,22 +78,33 @@ public class GameManager : MonoBehaviour
 
 
     #region GamaManager
-
+    private void GameStop(bool stop)
+    {
+        _isGameStop = stop;
+        Time.timeScale = (stop ? 0 : 1);
+    }
     public void GameClear()
     {
-        isGameClear = true;
+        GameStop(true);
         UIManager.Instance.ShowClearPanel();
+    }
+    public void ReturnGame()
+    {
+        GameStop(false);
     }
     private void ReturnMenu()
     {
-        if (isGameClear) return;
+        if (_isGameStop) return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene(1);
+        {
+            GameStop(true);
+            UIManager.Instance.ShowEscPanel(true);
+        }
     }
     private void Restart()
     {
-        if (isGameClear) return;
+        if (_isGameStop) return;
 
         if(Input.GetKeyDown(KeyCode.R))
             StageManager.Instance.ReloadStage();

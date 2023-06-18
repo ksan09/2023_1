@@ -19,6 +19,8 @@ public class InteractableUI : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsGameStop) return;
+
         ShowInteractableUI();
     }
 

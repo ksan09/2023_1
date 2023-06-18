@@ -16,6 +16,7 @@ public class UIManager
     private bool _errorTextShowed = false;
 
     private RectTransform _clearPanel;
+    private RectTransform _escPanel;
 
     private TextMeshProUGUI _popupText;
     private bool _popupTextShowed = false;
@@ -30,9 +31,15 @@ public class UIManager
         _popupText = _ingamePanel.Find("PopupText").GetComponent<TextMeshProUGUI>();
 
         _clearPanel = _canvas.Find("ClearPanel").GetComponent<RectTransform>();
+        _escPanel = _canvas.Find("EscPanel").GetComponent<RectTransform>();
 
     }
 
+    
+    public void ShowEscPanel(bool show)
+    {
+        _escPanel.gameObject.SetActive(show);
+    }
     public void ShowClearPanel()
     {
         _clearPanel.gameObject.SetActive(true);
