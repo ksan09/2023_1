@@ -19,6 +19,8 @@ public class PlayerSkill : MonoBehaviour
     private int             _hitCount = 0;
     private int             _jointCount = 0;
 
+    public List<Transform> HitTrms => _hitTrm;
+
     public bool                 IsUseSkill { get; private set; }
     private bool                _isPlayGunAnimation = false;
     private List<SpringJoint>   _joints = new List<SpringJoint>();

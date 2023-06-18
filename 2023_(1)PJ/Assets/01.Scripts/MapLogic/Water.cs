@@ -11,5 +11,11 @@ public class Water : MonoBehaviour
         {
             StageManager.Instance.ReloadStage();
         }
+
+        HoldBlock _hold = other.GetComponent<HoldBlock>();
+        if (_hold != null)
+        {
+            _hold.ResetHoldBlock();
+        }
     }
 }

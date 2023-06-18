@@ -7,14 +7,20 @@ public class HoldBlock : MonoBehaviour, IInteractable
 {
     private bool hold = false;
     private PlayerBrain _player;
+    private PlayerSkill _skill;
     private Rigidbody _rigidbody;
     private BoxCollider _collider;
+
+    private Vector3 _startPos;
 
     private void Awake()
     {
         _player = FindObjectOfType<PlayerBrain>();
+        _skill = _player.transform.GetComponent<PlayerSkill>();
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<BoxCollider>();
+
+        _startPos = transform.position;
     }
 
     private void Holding(bool use)
@@ -49,6 +55,20 @@ public class HoldBlock : MonoBehaviour, IInteractable
         }
     }
 
+    public void ResetHoldBlock()
+    {
+        if(hold == true)
+        {
+            _player.UnHold();
+            Holding(false);
+        }
+
+        transform.position = _startPos;
+        if(_skill.HitTrms.Contains(transform))
+        {
+            _skill.DeleteRope();
+        }
+    }
     private bool UnHoldCheck()
     {
         LayerMask layer = (-1) - (1 << LayerMask.NameToLayer("Player"));
