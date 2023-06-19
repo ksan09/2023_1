@@ -35,8 +35,8 @@ public class PlayerBrain : MonoBehaviour
     private PlayerSkill playerSkill;
     private Transform cameraTransform;
 
-    private Transform holdObject = null;
-    public Transform HoldObject { get; set; }
+    private HoldBlock holdObject = null;
+    public Transform HoldObject => holdObject.transform;
 
     private PlayerWeaponState playerWeaponState = PlayerWeaponState.RopeMode;
 
@@ -87,20 +87,23 @@ public class PlayerBrain : MonoBehaviour
         if(isHold)
         {
             Vector3 pos = transform.position;
-            pos.y += 0.3f;
+            pos.y -= 0.15f;
             Vector3 viewDir = cam.transform.forward;
             viewDir.y = 0f;
             pos += viewDir.normalized * 1f;
-            holdObject.position = pos;
+            HoldObject.position = pos;
         }
     }
-    public void DoHold(Transform obj)
+    public void DoHold(HoldBlock obj)
     {
         isHold = true;
         holdObject = obj;
     }
     public void UnHold()
     {
+        if (holdObject != null)
+            holdObject.Holding(false);
+
         isHold = false;
         holdObject = null;
     }

@@ -13,7 +13,6 @@ public class PlayerSkill : MonoBehaviour
     private Transform       _fireTrm;       // 총구 트랜스폼
 
     private RaycastHit      hit;
-    private List<Vector3>   _hitPos     = new List<Vector3>();
     private List<Vector3>   _hitOffset  = new List<Vector3>();
     private List<Transform> _hitTrm     = new List<Transform>();  // 레이캐스트 맞은 오브젝트
     private int             _hitCount = 0;
@@ -58,7 +57,6 @@ public class PlayerSkill : MonoBehaviour
     private void AddRope()
     {
         _hitCount++;
-        _hitPos.Add(hit.point);
         _hitTrm.Add(hit.collider.gameObject.transform);
         _hitOffset.Add(hit.point - _hitTrm[_hitCount - 1].position );
     }
@@ -112,7 +110,7 @@ public class PlayerSkill : MonoBehaviour
                 tempJoint.connectedAnchor = _hitOffset[_hitCount - 1];
 
                 // 거리 조정
-                float dist = Vector3.Distance(_hitPos[0], _hitPos[1]);
+                float dist = Vector3.Distance(_hitTrm[_hitCount - 1].position + _hitOffset[_hitCount - 1], _hitTrm[_hitCount - 2].position + _hitOffset[_hitCount - 2]);
 
                 tempJoint.maxDistance = dist;
                 tempJoint.minDistance = 0f;
@@ -132,7 +130,6 @@ public class PlayerSkill : MonoBehaviour
         AudioManager.Instance.PlayAudio("RopeDestroy", _shotSource);
 
         _hitCount = 0;
-        _hitPos.Clear();
         _hitOffset.Clear();
         _hitTrm.Clear();
         foreach (var joint in _joints)

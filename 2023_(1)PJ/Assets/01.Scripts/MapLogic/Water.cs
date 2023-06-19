@@ -9,7 +9,8 @@ public class Water : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            StageManager.Instance.ReloadStage();
+            GameManager.Instance.PlayerBrain.ResetPlayer();
+            StageManager.Instance.TeleportStartPos();
         }
 
         HoldBlock _hold = other.GetComponent<HoldBlock>();

@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 public class StageManager : MonoBehaviour
 {
     public static StageManager Instance;
+    private readonly int GameClearSceneNum = 3;
     private readonly int stageSceneNum = 2;
+    private readonly int maxStage = 5;
     private int currentStage = 0;
     public int CurrentStageNum => currentStage;
     private Map _stageMap = null;
@@ -48,6 +50,12 @@ public class StageManager : MonoBehaviour
         if(_stageMap != null)
             Destroy(_stageMap.gameObject);
 
+        if (stage > maxStage)
+        {
+            SceneManager.LoadScene(GameClearSceneNum);
+            yield break;
+        }
+
         currentStage = stage;
 
         AsyncOperation oper = SceneManager.LoadSceneAsync(stageSceneNum);
@@ -71,10 +79,16 @@ public class StageManager : MonoBehaviour
         _stageMap = Instantiate(map, transform.position, Quaternion.identity, transform);
         _stageMap.transform.position = Vector3.zero;
 
-        if (_stageMap != null)
-            Debug.Log("»ý¼ºµÊ");
+        if (_stageMap == null)
+            return;
 
-        GameManager.Instance.TeleportPlayer(map.StartPos);
+        GameManager.Instance.TeleportPlayer(_stageMap.StartPos);
         UIManager.Instance.PopupMessage($"Stage {num}");
+    }
+
+    public void TeleportStartPos()
+    {
+        if(_stageMap != null)
+            GameManager.Instance.TeleportPlayer(_stageMap.StartPos);
     }
 }

@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class HoldBlock : MonoBehaviour, IInteractable
 {
+    [SerializeField]
+    private Material alphaMaterial;
+
+    [SerializeField]
+    private List<MeshRenderer> renderers = new List<MeshRenderer>();
+    private Dictionary<MeshRenderer, Material> defaultMats = new Dictionary<MeshRenderer, Material>();
+
     private bool hold = false;
     private PlayerBrain _player;
     private PlayerSkill _skill;
@@ -15,6 +22,9 @@ public class HoldBlock : MonoBehaviour, IInteractable
 
     private void Awake()
     {
+        foreach (var renderer in renderers)
+            defaultMats.Add(renderer, renderer.material);
+
         _player = FindObjectOfType<PlayerBrain>();
         _skill = _player.transform.GetComponent<PlayerSkill>();
         _rigidbody = GetComponent<Rigidbody>();
@@ -23,19 +33,30 @@ public class HoldBlock : MonoBehaviour, IInteractable
         _startPos = transform.position;
     }
 
-    private void Holding(bool use)
+    public void Holding(bool use)
     {
         hold = use;
         _collider.isTrigger = use;
         _rigidbody.useGravity = !use;
         _rigidbody.constraints = use ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.FreezeRotation;
+
+        if(use)
+        {
+            foreach (var renderer in renderers)
+                renderer.material = alphaMaterial;
+        }
+        else
+        {
+            foreach (var renderer in defaultMats)
+                renderer.Key.material = renderer.Value;
+        }
     }
 
     public void Interact()
     {
         if (_player.IsHold == false && hold == false)
         {
-            _player.DoHold(transform);
+            _player.DoHold(this);
             Holding(true);
         }
         else if (_player.IsHold == true && hold == true)
@@ -47,7 +68,6 @@ public class HoldBlock : MonoBehaviour, IInteractable
             }
 
             _player.UnHold();
-            Holding(false);
         }
         else if (_player.IsHold == true && hold == false)
         {
@@ -60,7 +80,6 @@ public class HoldBlock : MonoBehaviour, IInteractable
         if(hold == true)
         {
             _player.UnHold();
-            Holding(false);
         }
 
         transform.position = _startPos;

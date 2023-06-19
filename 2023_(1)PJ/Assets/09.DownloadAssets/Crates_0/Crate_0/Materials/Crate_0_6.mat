@@ -10,11 +10,7 @@ Material:
   m_Name: Crate_0_6
   m_Shader: {fileID: 4800000, guid: 0e9d5a909a1f7e84882a534d0d11e49f, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _EMISSION
-  - _METALLICGLOSSMAP
-  - _NORMALMAP
-  - _SPECGLOSSMAP
+  m_InvalidKeywords: []
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -88,6 +84,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Opacity: 1
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -100,6 +97,7 @@ Material:
     - _UseEmissiveMap: 1
     - _UseMetallicMap: 1
     - _UseNormalMap: 1
+    - _UseOpacityMap: 0
     - _UseRoughnessMap: 1
     - _ZWrite: 1
     m_Colors:

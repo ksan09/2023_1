@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5973073552918423191}
   - component: {fileID: 3961758474908370211}
   - component: {fileID: 8329451806873669056}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HoldBlock2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd8977138fe0fa40b9e0c1154c7329f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alphaMaterial: {fileID: 2100000, guid: eca455ca1f87a8549895230b7b9e796e, type: 2}
+  renderers:
+  - {fileID: 6085391067914086290}
 --- !u!54 &8329451806873669056
 Rigidbody:
   m_ObjectHideFlags: 0
